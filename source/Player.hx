@@ -11,8 +11,8 @@ class Player extends FlxSprite
 
         makeGraphic(32, 64, FlxColor.BLACK);
 
-        maxVelocity.set(500, 500);
-        drag.set(50, 50);
+        maxVelocity.set(200, 200);
+        drag.set(40, 40);
     }
 
     override function update(elapsed:Float) {
@@ -21,7 +21,7 @@ class Player extends FlxSprite
         movement();
     }
 
-    var speed:Float = 100;
+    var speed:Float = 120;
 
     function movement() {
         var up:Bool = FlxG.keys.anyPressed(['W', 'UP']);
