@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tile.FlxTilemap;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
@@ -27,7 +28,6 @@ class PlayState extends FlxState
 		
 		bgColor = FlxColor.WHITE;
 
-
 		map = new FlxOgmo3Loader(AssetPaths.daMap__ogmo, AssetPaths.daLevel__json);
 		walls = map.loadTilemap(AssetPaths.tileset__png, "tiles");
 		walls.follow();
@@ -41,6 +41,7 @@ class PlayState extends FlxState
 		add(grpLocks);
 
 		map.loadEntities(placeEntities, 'entities');
+
 
 		_trail = new FlxTrail(_player, null, 10, 24, 0.3, 0.069);
 		add(_trail);
@@ -72,6 +73,8 @@ class PlayState extends FlxState
 		FlxG.camera.focusOn(_player.getPosition());
 		FlxG.worldBounds.set(0, 0, walls.width, walls.height);
 
+		FlxG.sound.playMusic(AssetPaths.float__mp3);
+
 		super.create();
 	}
 
@@ -85,10 +88,12 @@ class PlayState extends FlxState
 				key.canUnlock = entity.values.locknum;
 				grpKeys.add(key);
 			case 'locked':
-				var lock:Lock = new Lock(entity.x, entity.y);
-				lock.makeGraphic(entity.width, entity.height, FlxColor.BLUE);
+				var lock:Lock = new Lock(entity.x, entity.y, entity.width, entity.height);
 				lock.unlockedBy = entity.values.locknum;
 				grpLocks.add(lock);
+
+				lock.daTexts = new EncText(entity.x + 2, entity.y, entity.width - 4, "", 10);
+				add(lock.daTexts);
 			case "player":
 				_player.setPosition(entity.x, entity.y);
 		}
@@ -105,7 +110,7 @@ class PlayState extends FlxState
 			{
 				if (i == lock.unlockedBy)
 				{
-					lock.kill();
+					lock.decryptLock();
 				}
 			}
 		});
