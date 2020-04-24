@@ -6,6 +6,7 @@ import flixel.FlxSprite;
 
 class Player extends FlxSprite
 {
+    public var keysCollected:Array<Int> = [];
     public function new(x:Float, y:Float) {
         super(x, y);
 

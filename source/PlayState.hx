@@ -1,5 +1,6 @@
 package;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tile.FlxTilemap;
 import flixel.addons.editors.ogmo.FlxOgmo3Loader;
 import flixel.effects.particles.FlxEmitter;
@@ -17,8 +18,13 @@ class PlayState extends FlxState
 
 	var map:FlxOgmo3Loader;
 	var walls:FlxTilemap;
+
+	var grpKeys:FlxTypedGroup<Key>;
+	var grpLocks:FlxTypedGroup<Lock>;
 	override public function create():Void
 	{
+		FlxG.camera.fade(FlxColor.WHITE, 2, true);
+		
 		bgColor = FlxColor.WHITE;
 
 
@@ -28,6 +34,12 @@ class PlayState extends FlxState
 		add(walls);
 
 		_player = new Player(0, 0);
+		grpKeys = new FlxTypedGroup<Key>();
+		add(grpKeys);
+
+		grpLocks = new FlxTypedGroup<Lock>();
+		add(grpLocks);
+
 		map.loadEntities(placeEntities, 'entities');
 
 		_trail = new FlxTrail(_player, null, 10, 24, 0.3, 0.069);
@@ -68,6 +80,15 @@ class PlayState extends FlxState
 		var daName = entity.name;
 		switch (daName)
 		{
+			case "key":
+				var key:Key = new Key(entity.x, entity.y);
+				key.canUnlock = entity.values.locknum;
+				grpKeys.add(key);
+			case 'locked':
+				var lock:Lock = new Lock(entity.x, entity.y);
+				lock.makeGraphic(entity.width, entity.height, FlxColor.BLUE);
+				lock.unlockedBy = entity.values.locknum;
+				grpLocks.add(lock);
 			case "player":
 				_player.setPosition(entity.x, entity.y);
 		}
@@ -78,6 +99,22 @@ class PlayState extends FlxState
 		super.update(elapsed);
 
 		FlxG.collide(_player, walls);
+		FlxG.collide(_player, grpLocks, function(playa:Player, lock:Lock)
+		{
+			for (i in 0...playa.keysCollected.length)
+			{
+				if (i == lock.unlockedBy)
+				{
+					lock.kill();
+				}
+			}
+		});
+
+		FlxG.overlap(_player, grpKeys, function(playa:Player, key:Key)
+		{
+			playa.keysCollected.push(key.canUnlock);
+			key.kill();
+		});
 
 		snowShit.setPosition(FlxG.camera.scroll.x + _player.velocity.x, FlxG.camera.scroll.y);
 	}
