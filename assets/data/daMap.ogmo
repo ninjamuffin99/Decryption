@@ -27,12 +27,12 @@
     },
     {
       "definition": "tile",
-      "name": "Tiles",
-      "gridSize": {"x": 8, "y": 8},
+      "name": "tiles",
+      "gridSize": {"x": 32, "y": 32},
       "exportID": "61333495",
       "exportMode": 0,
       "arrayMode": 0,
-      "defaultTileset": ""
+      "defaultTileset": "default"
     }
   ],
   "entities": [
@@ -73,5 +73,7 @@
       "values": []
     }
   ],
-  "tilesets": []
+  "tilesets": [
+    {"label": "default", "path": "tileset.png", "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAAgCAYAAACinX6EAAAAbUlEQVRoge3ZsQ2AMBDFUIKy/8qhhYYyDwl7gW9Z1904PEuOn3L8C0wtcGNs2nlc3O8voABaQFMALaApgBbQFEALaAqgBTQF0AKaAmgBTQG0gKYAWkBTAC2gKYAW0BRAC2h2fWPe6DcoKYAW0FyDoAM/BUGOBAAAAABJRU5ErkJggg==", "tileWidth": 32, "tileHeight": 32, "tileSeparationX": 0, "tileSeparationY": 0}
+  ]
 }
