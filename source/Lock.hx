@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.FlxG;
@@ -28,15 +29,16 @@ class Lock extends FlxSprite
         {
             deCrypting = true;
 
-            
-            FlxTween.tween(daTexts, {encSpeed: 1}, 3, {ease: FlxEase.quadOut, onComplete: function(twen:FlxTween){kill();}});
+            FlxTween.tween(daTexts, {encSpeed: 1}, 3, {ease: FlxEase.quadOut, onComplete: function(twen:FlxTween)
+                {
+                    daTexts.finishText(); 
+                    kill();
+                }});
 
         }
     }
 
     override function kill() {
-        daTexts.kill();
-
         super.kill();
     }
 }

@@ -1,19 +1,30 @@
 package;
 
+import haxe.io.Bytes;
+import haxe.crypto.Base64;
+import flixel.tweens.FlxTween;
+import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.text.FlxText;
 
 class EncText extends FlxText
 {
 
-    private var encodedTexts:Array<String> = ["53 54 52 49 4e 47 20 48 41 53 20 42 45 45 4e 20 45 4e 43 52 59 50 54 45 44", "49 4e 50 55 54 20 45 4e 43 52 59 50 54 49 4f 4e 20 4b 45 59", "45 4e 43 4f 44 45 44 20 53 54 52 49 4e 47 0a", "52 45 41 44 2f 57 52 49 54 45 20 44 49 53 41 42 4c 45 44 0a", "44 45 43 4f 44 45 20 57 49 54 48 20 4b 45 59 0a"];
+    private var texts:Array<String> = ["R/W ERROR, CHECK DEBUG LOG", "UH OH, ENCODED TEXT!", "PLEASE DECODE", "ENCODED STRING", "UNABLE TO READ/WRITE ENCODED STRING", "ERROR READING ENCODED STRING", "STRING READ/WRITE ERROR, STRING IS ENCODED"];
+    private var encodedTexts:Array<String> = [];
     private var textCounter:Int = 0;
 
     private var encSpeed:Float = 6;
+    public var endText:String = "";
     
     public function new(x:Float, y:Float, w:Float, text:String, size:Int)
     {
         super(x, y, w, text, size);
+
+        for (i in 0...texts.length)
+        {
+            encodedTexts.push(Base64.encode(Bytes.ofString(texts[i])));
+        }
     }
 
     override function update(elapsed:Float) {
@@ -23,8 +34,38 @@ class EncText extends FlxText
 
         if (textCounter >= Math.ceil(encSpeed))
         {
-            text = FlxG.random.getObject(encodedTexts);
-            textCounter = 0;
+            if (isFinished)
+            {
+                if (FlxG.random.bool(20))
+                {
+                    text = Base64.encode(Bytes.ofString(endText));
+                    textCounter = Std.int(encSpeed - FlxG.random.int(3, 10));
+                }
+                else
+                {
+                    text = endText;
+                    textCounter = FlxG.random.int(-10, 20);
+                }
+            }
+            else
+            {
+                text = FlxG.random.getObject(encodedTexts);
+                textCounter = 0;
+            }
+            
         }
+    }
+
+    var isFinished:Bool = false;
+
+    public function finishText():Void
+    {
+        isFinished = true;
+        encSpeed = 30;
+
+        color = FlxColor.BLACK;
+        text = endText;
+
+        FlxTween.tween(this, {alpha: 0}, 4, {onComplete: function(tween:FlxTween){kill();}});
     }
 }

@@ -1,5 +1,8 @@
 package;
 
+import haxe.io.Bytes;
+import haxe.crypto.Base64;
+import haxe.crypto.Md5;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.tile.FlxTilemap;
@@ -93,6 +96,7 @@ class PlayState extends FlxState
 				grpLocks.add(lock);
 
 				lock.daTexts = new EncText(entity.x + 2, entity.y, entity.width - 4, "", 10);
+				lock.daTexts.endText = entity.values.locktext;
 				add(lock.daTexts);
 			case "player":
 				_player.setPosition(entity.x, entity.y);

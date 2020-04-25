@@ -22,7 +22,7 @@ class Player extends FlxSprite
         movement();
     }
 
-    var speed:Float = 40;
+    var speed:Float = 90;
 
     function movement() {
         var up:Bool = FlxG.keys.anyPressed(['W', 'UP']);

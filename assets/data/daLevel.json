@@ -26,7 +26,7 @@
           "height": 32,
           "originX": 0,
           "originY": 0,
-          "values": {"locknum": 0}
+          "values": {"locknum": 0, "locktext": "hey, you wanna raid together?"}
         },
         {
           "name": "key",

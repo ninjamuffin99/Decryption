@@ -107,7 +107,8 @@
       "nodeGhost": true,
       "tags": [],
       "values": [
-        {"name": "locknum", "definition": "Integer", "defaults": 0, "bounded": false, "min": 0, "max": 100}
+        {"name": "locknum", "definition": "Integer", "defaults": 0, "bounded": false, "min": 0, "max": 100},
+        {"name": "locktext", "definition": "String", "defaults": "", "maxLength": 0, "trimWhitespace": true}
       ]
     },
     {
