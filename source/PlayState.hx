@@ -1,5 +1,7 @@
 package;
 
+import flixel.effects.particles.FlxParticle;
+import flixel.addons.effects.FlxTrailArea;
 import flixel.text.FlxText;
 import flixel.FlxObject;
 import haxe.io.Bytes;
@@ -31,6 +33,8 @@ class PlayState extends FlxState
 	var grpFragments:FlxTypedGroup<Fragment>;
 	var grpProps:FlxTypedGroup<CutsceneProp>;
 	var fragsNeeded:FlxText;
+
+	var trailArea:FlxTrailArea;
 	override public function create():Void
 	{
 		FlxG.camera.fade(FlxColor.WHITE, 2, true);
@@ -73,9 +77,27 @@ class PlayState extends FlxState
 		
 		add(_player);
 
+		trailArea = new FlxTrailArea(0, 0, FlxG.width, FlxG.height);
+		trailArea.delay = 15;
+		trailArea.alphaMultiplier = 0.3;
+		trailArea.simpleRender = true;
+		add(trailArea);
+
 		snowShit = new FlxEmitter(20, 20);
-		snowShit.makeParticles(1, 4, FlxColor.BLACK, 200);
-		snowShit.makeParticles(1, 7, FlxColor.BLACK, 200);
+		var particleAmounts:Int = 100;
+		var partic:ParticleBit;
+		var slimPartic:FlxParticle;
+		for (i in 0...particleAmounts)
+		{
+			partic = new ParticleBit();
+			snowShit.add(partic);
+			trailArea.add(partic);
+
+			slimPartic = new FlxParticle();
+			slimPartic.makeGraphic(1, 4, FlxColor.BLACK);
+			snowShit.add(slimPartic);
+
+		}
 		snowShit.lifespan.set(2, 33);
 		snowShit.launchMode = FlxEmitterMode.SQUARE;
 		
@@ -199,5 +221,6 @@ class PlayState extends FlxState
 		});
 
 		snowShit.setPosition(FlxG.camera.scroll.x + _player.velocity.x, FlxG.camera.scroll.y);
+		trailArea.setPosition(FlxG.camera.scroll.x, snowShit.y);
 	}
 }
