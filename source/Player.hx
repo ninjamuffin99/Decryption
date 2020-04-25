@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
@@ -9,7 +10,12 @@ class Player extends FlxSprite
     public function new(x:Float, y:Float) {
         super(x, y);
 
-        makeGraphic(32, 64, FlxColor.BLACK);
+        // makeGraphic(32, 64, FlxColor.BLACK);
+
+        loadGraphic(AssetPaths.player__png);
+
+        setFacingFlip(FlxObject.LEFT, false, false);
+        setFacingFlip(FlxObject.RIGHT, true, false);
 
         maxVelocity.set(60, 60);
         drag.set(17, 17);
@@ -41,10 +47,12 @@ class Player extends FlxSprite
                 if (left)
                 {
                     acceleration.x = -speed;
+                    facing = FlxObject.LEFT;
                 }
                 if (right)
                 {
                     acceleration.x = speed;
+                    facing = FlxObject.RIGHT;
                 }
             }
             else

@@ -32,7 +32,7 @@ class PlayState extends FlxState
 	var grpLocks:FlxTypedGroup<Lock>;
 	var grpFragments:FlxTypedGroup<Fragment>;
 	var grpProps:FlxTypedGroup<CutsceneProp>;
-	var fragsNeeded:FlxText;
+	var fragsNeeded:HoverText;
 
 	var trailArea:FlxTrailArea;
 	override public function create():Void
@@ -91,7 +91,8 @@ class PlayState extends FlxState
 		{
 			partic = new ParticleBit();
 			snowShit.add(partic);
-			trailArea.add(partic);
+			if (FlxG.random.bool(70))
+				trailArea.add(partic);
 
 			slimPartic = new FlxParticle();
 			slimPartic.makeGraphic(1, 4, FlxColor.BLACK);
@@ -127,7 +128,7 @@ class PlayState extends FlxState
 
 		FlxG.sound.playMusic(AssetPaths.float__mp3);
 
-		fragsNeeded = new FlxText(0, 0, 0, "", 16);
+		fragsNeeded = new HoverText(0, 0, 0, "", 16);
 		fragsNeeded.color = FlxColor.BLACK;
 		add(fragsNeeded);
 
@@ -208,11 +209,11 @@ class PlayState extends FlxState
 					howManyCollected += 1;
 			});
 
-			fragsNeeded.text = howManyCollected + "/" + prop.grpFrags.members.length;
+			fragsNeeded.textDecoding = howManyCollected + "/" + prop.grpFrags.members.length;
 			fragsNeeded.setPosition(prop.x, prop.y - 20);
 		});
 
-		fragsNeeded.visible = overlappingProp;
+		fragsNeeded.isOverlapping = overlappingProp;
 
 		FlxG.overlap(_player, grpFragments, function(playa:Player, frag:Fragment)
 		{
