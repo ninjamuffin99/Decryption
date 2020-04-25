@@ -1,5 +1,6 @@
 package;
 
+import flixel.text.FlxText;
 import flixel.FlxObject;
 import haxe.io.Bytes;
 import haxe.crypto.Base64;
@@ -27,6 +28,9 @@ class PlayState extends FlxState
 
 	var grpKeys:FlxTypedGroup<Key>;
 	var grpLocks:FlxTypedGroup<Lock>;
+	var grpFragments:FlxTypedGroup<Fragment>;
+	var grpProps:FlxTypedGroup<CutsceneProp>;
+	var fragsNeeded:FlxText;
 	override public function create():Void
 	{
 		FlxG.camera.fade(FlxColor.WHITE, 2, true);
@@ -45,8 +49,24 @@ class PlayState extends FlxState
 		grpLocks = new FlxTypedGroup<Lock>();
 		add(grpLocks);
 
+		grpProps = new FlxTypedGroup<CutsceneProp>();
+		add(grpProps);
+
+		grpFragments = new FlxTypedGroup<Fragment>();
+		add(grpFragments);
+
 		map.loadEntities(placeEntities, 'entities');
 
+		grpProps.forEach(function(prop:CutsceneProp)
+		{
+			grpFragments.forEach(function(frag:Fragment)
+			{
+				if (frag.cutsceneNum == prop.cutsceneNum)
+				{
+					prop.grpFrags.add(frag);
+				}
+			});
+		});
 
 		_trail = new FlxTrail(_player, null, 10, 24, 0.3, 0.069);
 		add(_trail);
@@ -85,6 +105,10 @@ class PlayState extends FlxState
 
 		FlxG.sound.playMusic(AssetPaths.float__mp3);
 
+		fragsNeeded = new FlxText(0, 0, 0, "", 16);
+		fragsNeeded.color = FlxColor.BLACK;
+		add(fragsNeeded);
+
 		super.create();
 	}
 
@@ -93,9 +117,14 @@ class PlayState extends FlxState
 		var daName = entity.name;
 		switch (daName)
 		{
+			case "fragment":
+				var frag:Fragment = new Fragment(entity.x, entity.y);
+				frag.cutsceneNum = entity.values.cutscenenumber;
+				grpFragments.add(frag);
 			case "cutsceneprop":
 				var prop:CutsceneProp = new CutsceneProp(entity.x, entity.y);
-				add(prop);
+				prop.cutsceneNum = entity.values.scenenum;
+				grpProps.add(prop);
 			case "key":
 				var key:Key = new Key(entity.x, entity.y);
 				key.canUnlock = entity.values.locknum;
@@ -142,6 +171,31 @@ class PlayState extends FlxState
 		{
 			key.collected = true;
 			key.kill();
+		});
+
+		var overlappingProp:Bool = false;
+
+		FlxG.overlap(_player, grpProps, function(playa:Player, prop:CutsceneProp)
+		{
+			overlappingProp = true;
+			
+			var howManyCollected:Int = 0;
+			prop.grpFrags.forEach(function(daFrags:Fragment)
+			{
+				if (daFrags.collected)
+					howManyCollected += 1;
+			});
+
+			fragsNeeded.text = howManyCollected + "/" + prop.grpFrags.members.length;
+			fragsNeeded.setPosition(prop.x, prop.y - 20);
+		});
+
+		fragsNeeded.visible = overlappingProp;
+
+		FlxG.overlap(_player, grpFragments, function(playa:Player, frag:Fragment)
+		{
+			frag.collected = true;
+			frag.kill();
 		});
 
 		snowShit.setPosition(FlxG.camera.scroll.x + _player.velocity.x, FlxG.camera.scroll.y);

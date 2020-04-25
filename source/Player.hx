@@ -11,7 +11,7 @@ class Player extends FlxSprite
 
         makeGraphic(32, 64, FlxColor.BLACK);
 
-        maxVelocity.set(50, 50);
+        maxVelocity.set(60, 60);
         drag.set(17, 17);
     }
 
@@ -21,7 +21,7 @@ class Player extends FlxSprite
         movement();
     }
 
-    var speed:Float = 120;
+    var speed:Float = 160;
 
     function movement() {
         var up:Bool = FlxG.keys.anyPressed(['W', 'UP']);
