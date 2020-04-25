@@ -12,6 +12,7 @@ class Lock extends FlxSprite
 {
     public var unlockedBy:Int = 0;
     public var daTexts:EncText;
+    public var loader:LoadingBar;
     private var deCrypting:Bool = false;
     public function new(x:Float, y:Float, w:Float, h:Float)
     {
@@ -29,10 +30,13 @@ class Lock extends FlxSprite
         {
             deCrypting = true;
 
+            FlxTween.tween(this, {alpha: 0}, 3);
+            FlxTween.tween(loader.scale, {x: 1}, 3);
             FlxTween.tween(daTexts, {encSpeed: 1}, 3, {ease: FlxEase.quadOut, onComplete: function(twen:FlxTween)
                 {
                     daTexts.finishText(); 
                     kill();
+                    loader.kill();
                 }});
 
         }

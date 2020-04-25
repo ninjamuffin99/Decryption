@@ -6,7 +6,6 @@ import flixel.FlxSprite;
 
 class Player extends FlxSprite
 {
-    public var keysCollected:Array<Int> = [];
     public function new(x:Float, y:Float) {
         super(x, y);
 
@@ -22,7 +21,7 @@ class Player extends FlxSprite
         movement();
     }
 
-    var speed:Float = 90;
+    var speed:Float = 120;
 
     function movement() {
         var up:Bool = FlxG.keys.anyPressed(['W', 'UP']);

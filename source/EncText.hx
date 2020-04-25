@@ -1,5 +1,7 @@
 package;
 
+import haxe.crypto.Md5;
+import haxe.crypto.Sha1;
 import haxe.io.Bytes;
 import haxe.crypto.Base64;
 import flixel.tweens.FlxTween;
@@ -21,9 +23,11 @@ class EncText extends FlxText
     {
         super(x, y, w, text, size);
 
+        font = AssetPaths.consola__ttf;
+
         for (i in 0...texts.length)
         {
-            encodedTexts.push(Base64.encode(Bytes.ofString(texts[i])));
+            encodedTexts.push(Md5.encode(texts[i]));
         }
     }
 
@@ -36,9 +40,9 @@ class EncText extends FlxText
         {
             if (isFinished)
             {
-                if (FlxG.random.bool(20))
+                if (FlxG.random.bool(25))
                 {
-                    text = Base64.encode(Bytes.ofString(endText));
+                    text = Md5.encode(endText);
                     textCounter = Std.int(encSpeed - FlxG.random.int(3, 10));
                 }
                 else
@@ -61,7 +65,7 @@ class EncText extends FlxText
     public function finishText():Void
     {
         isFinished = true;
-        encSpeed = 30;
+        encSpeed = 20;
 
         color = FlxColor.BLACK;
         text = endText;

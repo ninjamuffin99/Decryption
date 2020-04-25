@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxObject;
 import haxe.io.Bytes;
 import haxe.crypto.Base64;
 import haxe.crypto.Md5;
@@ -17,6 +18,7 @@ class PlayState extends FlxState
 {
 
 	var _player:Player;
+	var camFollow:FlxObject;
 	var _trail:FlxTrail;
 	private var snowShit:FlxEmitter;
 
@@ -72,7 +74,12 @@ class PlayState extends FlxState
 		snowShit.height = FlxG.height;
 		add(snowShit);
 
-		FlxG.camera.follow(_player, null, 0.02);
+		camFollow = new FlxObject(_player.x, _player.y, 1, 1);
+		add(camFollow);
+
+		walls.follow(FlxG.camera);
+
+		FlxG.camera.follow(camFollow, null, 0.02);
 		FlxG.camera.focusOn(_player.getPosition());
 		FlxG.worldBounds.set(0, 0, walls.width, walls.height);
 
@@ -86,6 +93,9 @@ class PlayState extends FlxState
 		var daName = entity.name;
 		switch (daName)
 		{
+			case "cutsceneprop":
+				var prop:CutsceneProp = new CutsceneProp(entity.x, entity.y);
+				add(prop);
 			case "key":
 				var key:Key = new Key(entity.x, entity.y);
 				key.canUnlock = entity.values.locknum;
@@ -93,11 +103,18 @@ class PlayState extends FlxState
 			case 'locked':
 				var lock:Lock = new Lock(entity.x, entity.y, entity.width, entity.height);
 				lock.unlockedBy = entity.values.locknum;
+				trace(lock.unlockedBy);
 				grpLocks.add(lock);
-
-				lock.daTexts = new EncText(entity.x + 2, entity.y, entity.width - 4, "", 10);
+				lock.daTexts = new EncText(entity.x + 2, entity.y, entity.width - 4, "", 16);
 				lock.daTexts.endText = entity.values.locktext;
 				add(lock.daTexts);
+
+				var loader:LoadingBar = new LoadingBar(entity.x + 2, entity.y - 10);
+				loader.makeGraphic(entity.width - 4, 8, FlxColor.BLACK);
+				lock.loader = loader;
+				loader.scale.x = 0;
+				add(loader);
+
 			case "player":
 				_player.setPosition(entity.x, entity.y);
 		}
@@ -107,21 +124,23 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
+		camFollow.setPosition(_player.x, _player.y);
+
 		FlxG.collide(_player, walls);
 		FlxG.collide(_player, grpLocks, function(playa:Player, lock:Lock)
 		{
-			for (i in 0...playa.keysCollected.length)
+			grpKeys.forEachDead(function(k:Key)
 			{
-				if (i == lock.unlockedBy)
+				if (k.collected && k.canUnlock == lock.unlockedBy)
 				{
 					lock.decryptLock();
 				}
-			}
+			});
 		});
 
 		FlxG.overlap(_player, grpKeys, function(playa:Player, key:Key)
 		{
-			playa.keysCollected.push(key.canUnlock);
+			key.collected = true;
 			key.kill();
 		});
 
