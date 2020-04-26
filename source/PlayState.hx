@@ -35,6 +35,7 @@ class PlayState extends FlxState
 	var grpLocks:FlxTypedGroup<Lock>;
 	var grpFragments:FlxTypedGroup<Fragment>;
 	var grpProps:FlxTypedGroup<CutsceneProp>;
+	var grpHidden:FlxTypedGroup<HiddenMessage>;
 	var fragsNeeded:HoverText;
 
 	var trailArea:FlxTrailArea;
@@ -63,12 +64,16 @@ class PlayState extends FlxState
 		grpFragments = new FlxTypedGroup<Fragment>();
 		add(grpFragments);
 
+		grpHidden = new FlxTypedGroup<HiddenMessage>();
+		add(grpHidden);
+
 
 		map.loadEntities(placeEntities, 'entities');
 
-		grpProps.forEach(function(prop:CutsceneProp)
+
+		grpFragments.forEach(function(frag:Fragment)
 		{
-			grpFragments.forEach(function(frag:Fragment)
+			grpProps.forEach(function(prop:CutsceneProp)
 			{
 				if (frag.cutsceneNum == prop.cutsceneNum)
 				{
@@ -79,7 +84,19 @@ class PlayState extends FlxState
 					frag.daProp = prop;
 				}
 			});
+
+			grpHidden.forEach(function(message:HiddenMessage)
+			{
+				if (frag.fragid == message.fragid)
+				{
+					message.daFrag = frag;
+					frag.grpMessages.add(message);
+					message.daPlayer = _player;
+				}
+			});
+			
 		});
+		
 
 		_trail = new FlxTrail(_player, null, 10, 24, 0.3, 0.069);
 		add(_trail);
@@ -150,9 +167,15 @@ class PlayState extends FlxState
 		var daName = entity.name;
 		switch (daName)
 		{
+			case "secretmessage":
+				var secret:HiddenMessage = new HiddenMessage(entity.x, entity.y, 0, "", 12);
+				secret.endText = entity.values.message;
+				secret.fragid = entity.values.fragid;
+				grpHidden.add(secret);
 			case "fragment":
 				var frag:Fragment = new Fragment(entity.x, entity.y);
 				frag.cutsceneNum = entity.values.scenenumber;
+				frag.fragid = entity.values.fragid;
 				grpFragments.add(frag);
 
 				var glitchEffect:FlxEffectSprite;
@@ -236,6 +259,12 @@ class PlayState extends FlxState
 		FlxG.overlap(_player, grpFragments, function(playa:Player, frag:Fragment)
 		{
 			FlxG.camera.flash(FlxColor.WHITE, 0.2);
+
+			frag.grpMessages.forEach(function(message:HiddenMessage)
+			{
+				message.activated = true;
+			});
+
 			new FlxTimer().start(3, function(tmr:FlxTimer)
 				{
 					activeTimer = 120;
