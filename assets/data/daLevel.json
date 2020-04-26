@@ -46,7 +46,7 @@
           "y": 712,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 0}
+          "values": {"scenenum": 2}
         },
         {
           "name": "locked",
@@ -94,23 +94,23 @@
         },
         {
           "name": "fragment",
-          "id": 13,
-          "_eid": "83242277",
-          "x": 752,
-          "y": 1120,
-          "originX": 0,
-          "originY": 0,
-          "values": {"scenenumber": 0}
-        },
-        {
-          "name": "fragment",
           "id": 14,
           "_eid": "83242277",
           "x": 584,
           "y": 664,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenumber": 0}
+          "values": {"scenenumber": 2}
+        },
+        {
+          "name": "fragment",
+          "id": 15,
+          "_eid": "83242277",
+          "x": 624,
+          "y": 752,
+          "originX": 0,
+          "originY": 0,
+          "values": {"scenenumber": 2}
         }
       ]
     },

@@ -1,5 +1,7 @@
 package;
 
+import flixel.addons.effects.chainable.FlxGlitchEffect;
+import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.effects.particles.FlxParticle;
 import flixel.addons.effects.FlxTrailArea;
 import flixel.text.FlxText;
@@ -35,6 +37,7 @@ class PlayState extends FlxState
 	var fragsNeeded:HoverText;
 
 	var trailArea:FlxTrailArea;
+
 	override public function create():Void
 	{
 		FlxG.camera.fade(FlxColor.WHITE, 2, true);
@@ -59,6 +62,7 @@ class PlayState extends FlxState
 		grpFragments = new FlxTypedGroup<Fragment>();
 		add(grpFragments);
 
+
 		map.loadEntities(placeEntities, 'entities');
 
 		grpProps.forEach(function(prop:CutsceneProp)
@@ -67,7 +71,10 @@ class PlayState extends FlxState
 			{
 				if (frag.cutsceneNum == prop.cutsceneNum)
 				{
+					trace("fragment added");
 					prop.grpFrags.add(frag);
+					frag.loadGraphicFromSprite(prop);
+					frag.alpha = 0.8;
 				}
 			});
 		});
@@ -142,12 +149,22 @@ class PlayState extends FlxState
 		{
 			case "fragment":
 				var frag:Fragment = new Fragment(entity.x, entity.y);
-				frag.cutsceneNum = entity.values.cutscenenumber;
+				frag.cutsceneNum = entity.values.scenenumber;
 				grpFragments.add(frag);
+
+				var glitchEffect:FlxEffectSprite;
+				add(glitchEffect = new FlxEffectSprite(frag, [new FlxGlitchEffect(5, 2, 0.01)]));
+				glitchEffect.setPosition(entity.x, entity.y);
+				frag.glitchSprite = glitchEffect;
 			case "cutsceneprop":
 				var prop:CutsceneProp = new CutsceneProp(entity.x, entity.y);
 				prop.cutsceneNum = entity.values.scenenum;
 				grpProps.add(prop);
+
+				var glitchEffect:FlxEffectSprite;
+				add(glitchEffect = new FlxEffectSprite(prop, [new FlxGlitchEffect(2, 1, 0.02)]));
+				glitchEffect.setPosition(prop.x, prop.y);
+				prop.glitchEffect = glitchEffect;
 			case "key":
 				var key:Key = new Key(entity.x, entity.y);
 				key.canUnlock = entity.values.locknum;
@@ -155,7 +172,6 @@ class PlayState extends FlxState
 			case 'locked':
 				var lock:Lock = new Lock(entity.x, entity.y, entity.width, entity.height);
 				lock.unlockedBy = entity.values.locknum;
-				trace(lock.unlockedBy);
 				grpLocks.add(lock);
 				lock.daTexts = new EncText(entity.x + 2, entity.y, entity.width - 4, "", 16);
 				lock.daTexts.endText = entity.values.locktext;
