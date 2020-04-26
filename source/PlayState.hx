@@ -168,7 +168,7 @@ class PlayState extends FlxState
 		switch (daName)
 		{
 			case "secretmessage":
-				var secret:HiddenMessage = new HiddenMessage(entity.x, entity.y, 0, "", 12);
+				var secret:HiddenMessage = new HiddenMessage(entity.x, entity.y, entity.width, "", 12);
 				secret.endText = entity.values.message;
 				secret.fragid = entity.values.fragid;
 				grpHidden.add(secret);
@@ -224,7 +224,8 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
-		camFollow.setPosition(_player.x, _player.y);
+		if (!_player.inCutscene)
+			camFollow.setPosition(_player.x, _player.y);
 
 		FlxG.collide(_player, walls);
 		FlxG.collide(_player, grpLocks, function(playa:Player, lock:Lock)
@@ -250,6 +251,11 @@ class PlayState extends FlxState
 		{
 			overlappingProp = true;
 
+			if (prop.amountCollected == prop.grpFrags.members.length && fragsNeeded.decoded && !_player.inCutscene)
+			{
+				playCutscene(prop);
+			}
+
 			fragsNeeded.textDecoding = prop.amountCollected + "/" + prop.grpFrags.members.length;
 			fragsNeeded.setPosition(prop.x, prop.y - 20);
 		});
@@ -265,7 +271,7 @@ class PlayState extends FlxState
 				message.activated = true;
 			});
 
-			new FlxTimer().start(3, function(tmr:FlxTimer)
+			new FlxTimer().start(2.5, function(tmr:FlxTimer)
 				{
 					activeTimer = 120;
 				});
@@ -294,5 +300,36 @@ class PlayState extends FlxState
 
 		snowShit.setPosition(FlxG.camera.scroll.x + _player.velocity.x, FlxG.camera.scroll.y);
 		trailArea.setPosition(FlxG.camera.scroll.x, snowShit.y);
+	}
+
+	private function playCutscene(prop:CutsceneProp):Void
+	{
+		_player.inCutscene = true;
+		_player.velocity.set();
+		// _player.visible = false;
+		FlxG.camera.flash(FlxColor.WHITE, 0.2);
+
+		loadCutscene(0, prop);
+	}
+
+	public function loadCutscene(sceneNum:Int = 0, prop:CutsceneProp):Void
+	{
+		var sceneMetaData:Array<Dynamic> = Cutscenes.cutscenes[sceneNum][0];
+		for (i in 0...sceneMetaData[0])
+		{
+			trace("add character" + i);
+
+			var actor:SceneActor = new SceneActor(prop.x + sceneMetaData[1][i][0], prop.y + sceneMetaData[1][i][1], sceneMetaData[2][i]);
+			add(actor);
+
+			var glitchEffect:FlxEffectSprite;
+			add(glitchEffect = new FlxEffectSprite(actor, [new FlxGlitchEffect(FlxG.random.int(4, 7), 2, FlxG.random.float(0.05, 0.2))]));
+			glitchEffect.setPosition(actor.x, actor.y);
+
+			
+		}
+
+		camFollow.setPosition(camFollow.x + sceneMetaData[3][0], camFollow.y + sceneMetaData[3][1]);
+		FlxG.camera.zoom = sceneMetaData[3][2];
 	}
 }

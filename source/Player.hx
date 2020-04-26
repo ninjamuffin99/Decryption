@@ -7,6 +7,8 @@ import flixel.FlxSprite;
 
 class Player extends FlxSprite
 {
+
+    public var inCutscene:Bool = false;
     public function new(x:Float, y:Float) {
         super(x, y);
 
@@ -24,7 +26,8 @@ class Player extends FlxSprite
     override function update(elapsed:Float) {
         super.update(elapsed);
 
-        movement();
+        if (!inCutscene)
+            movement();
     }
 
     var speed:Float = 160;

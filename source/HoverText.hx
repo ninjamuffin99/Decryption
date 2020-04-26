@@ -9,7 +9,7 @@ class HoverText extends FlxText
     public var hoverActive:Bool = false;
     public var textDecoding:String = "";
 
-    private var decoded:Bool = false;
+    public var decoded:Bool = false;
     private var decodeTimer:Int = 0;
     private var decodeProgress:Int = 0;
     private var daSize:Int = 16;
