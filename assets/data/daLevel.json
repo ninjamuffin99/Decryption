@@ -94,23 +94,13 @@
         },
         {
           "name": "fragment",
-          "id": 14,
-          "_eid": "83242277",
-          "x": 584,
-          "y": 664,
-          "originX": 0,
-          "originY": 0,
-          "values": {"scenenumber": 2}
-        },
-        {
-          "name": "fragment",
           "id": 15,
           "_eid": "83242277",
-          "x": 624,
-          "y": 752,
+          "x": 712,
+          "y": 776,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenumber": 2}
+          "values": {"scenenumber": 2, "fragmessage": "hey you need a raid buddy?"}
         }
       ]
     },

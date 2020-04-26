@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.addons.effects.chainable.FlxGlitchEffect;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.effects.particles.FlxParticle;
@@ -74,7 +75,8 @@ class PlayState extends FlxState
 					trace("fragment added");
 					prop.grpFrags.add(frag);
 					frag.loadGraphicFromSprite(prop);
-					frag.alpha = 0.8;
+					frag.alpha = 0.5;
+					frag.daProp = prop;
 				}
 			});
 		});
@@ -140,6 +142,7 @@ class PlayState extends FlxState
 		add(fragsNeeded);
 
 		super.create();
+		
 	}
 
 	function placeEntities(entity:EntityData)
@@ -156,6 +159,10 @@ class PlayState extends FlxState
 				add(glitchEffect = new FlxEffectSprite(frag, [new FlxGlitchEffect(5, 2, 0.01)]));
 				glitchEffect.setPosition(entity.x, entity.y);
 				frag.glitchSprite = glitchEffect;
+				frag.fragText = entity.values.fragmessage;
+
+				FlxG.camera.follow(frag);
+
 			case "cutsceneprop":
 				var prop:CutsceneProp = new CutsceneProp(entity.x, entity.y);
 				prop.cutsceneNum = entity.values.scenenum;
@@ -188,6 +195,8 @@ class PlayState extends FlxState
 		}
 	}
 
+	var activeTimer:Int = 0;
+
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
@@ -217,25 +226,42 @@ class PlayState extends FlxState
 		FlxG.overlap(_player, grpProps, function(playa:Player, prop:CutsceneProp)
 		{
 			overlappingProp = true;
-			
-			var howManyCollected:Int = 0;
-			prop.grpFrags.forEach(function(daFrags:Fragment)
-			{
-				if (daFrags.collected)
-					howManyCollected += 1;
-			});
 
-			fragsNeeded.textDecoding = howManyCollected + "/" + prop.grpFrags.members.length;
+			fragsNeeded.textDecoding = prop.amountCollected + "/" + prop.grpFrags.members.length;
 			fragsNeeded.setPosition(prop.x, prop.y - 20);
 		});
 
-		fragsNeeded.isOverlapping = overlappingProp;
+		fragsNeeded.hoverActive = overlappingProp;
 
 		FlxG.overlap(_player, grpFragments, function(playa:Player, frag:Fragment)
 		{
+			FlxG.camera.flash(FlxColor.WHITE, 0.2);
+			new FlxTimer().start(3, function(tmr:FlxTimer)
+				{
+					activeTimer = 120;
+				});
+			
+			
+			frag.daProp.amountCollected += 1;
 			frag.collected = true;
+
+			fragsNeeded.textDecoding = frag.daProp.amountCollected + "/" + frag.daProp.grpFrags.members.length;
+			fragsNeeded.setPosition(frag.x, frag.y);
+
+			var message:EncText = new EncText(frag.x, frag.y + 12, 0, "", 12);
+			message.endText = frag.fragText;
+			add(message);
+			message.finishText();
+
 			frag.kill();
 		});
+
+		if (activeTimer > 0)
+		{
+			activeTimer--;
+
+			fragsNeeded.hoverActive = true;
+		}
 
 		snowShit.setPosition(FlxG.camera.scroll.x + _player.velocity.x, FlxG.camera.scroll.y);
 		trailArea.setPosition(FlxG.camera.scroll.x, snowShit.y);

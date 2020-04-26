@@ -6,7 +6,7 @@ import flixel.text.FlxText;
 
 class HoverText extends FlxText
 {
-    public var isOverlapping:Bool = false;
+    public var hoverActive:Bool = false;
     public var textDecoding:String = "";
 
     private var decoded:Bool = false;
@@ -23,7 +23,7 @@ class HoverText extends FlxText
     override function update(elapsed:Float) {
         super.update(elapsed);
 
-        if (isOverlapping && !decoded)
+        if (hoverActive && !decoded)
         {
             visible = true;
             decodeTimer++;
@@ -46,7 +46,7 @@ class HoverText extends FlxText
             }
         }
 
-        if (!isOverlapping && decoded)
+        if (!hoverActive && decoded)
         {
             decodeTimer++;
             size = Std.int(daSize / 2);

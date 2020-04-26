@@ -222,7 +222,8 @@
       "nodeGhost": true,
       "tags": [],
       "values": [
-        {"name": "scenenumber", "definition": "Integer", "defaults": 0, "bounded": false, "min": 0, "max": 100}
+        {"name": "scenenumber", "definition": "Integer", "defaults": 0, "bounded": false, "min": 0, "max": 100},
+        {"name": "fragmessage", "definition": "String", "defaults": "", "maxLength": 0, "trimWhitespace": true}
       ]
     }
   ],

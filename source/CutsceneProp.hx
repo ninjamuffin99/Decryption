@@ -10,6 +10,8 @@ class CutsceneProp extends FlxSprite
     public var grpFrags:FlxTypedGroup<Fragment>;
 
     public var glitchEffect:FlxEffectSprite;
+    public var amountCollected:Int = 0;
+
     public function new(x:Float, y:Float) {
         super(x, y);
 
