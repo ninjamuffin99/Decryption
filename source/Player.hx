@@ -1,5 +1,6 @@
 package;
 
+import flixel.system.FlxSound;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.util.FlxColor;
@@ -9,6 +10,7 @@ class Player extends FlxSprite
 {
 
     public var inCutscene:Bool = false;
+    private var floatinSound:FlxSound;
     public function new(x:Float, y:Float) {
         super(x, y);
 
@@ -21,6 +23,11 @@ class Player extends FlxSprite
 
         maxVelocity.set(60, 60);
         drag.set(17, 17);
+
+        floatinSound = new FlxSound();
+        floatinSound.loadEmbedded(AssetPaths.movingLoop__mp3, true, false);
+        floatinSound.volume = 0.4;
+        FlxG.sound.list.add(floatinSound);
     }
 
     override function update(elapsed:Float) {
@@ -45,6 +52,9 @@ class Player extends FlxSprite
 
         if (left || right || up || down)
         {
+
+            floatinSound.play();
+
             if (left || right)
             {
                 if (left)
@@ -77,6 +87,7 @@ class Player extends FlxSprite
         }
         else
         {
+            floatinSound.pause();
             acceleration.x = acceleration.y = 0;
         }
     }

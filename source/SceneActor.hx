@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.addons.editors.ogmo.FlxOgmoLoader;
@@ -7,6 +8,7 @@ import flixel.FlxSprite;
 
 class SceneActor extends FlxSprite
 {
+    public var glitchEffect:FlxEffectSprite;
     public function new(x:Float, y:Float, actor:String) {
         super(x, y);
 
@@ -17,5 +19,12 @@ class SceneActor extends FlxSprite
         }
 
         alpha = 0.7;
+    }
+
+    override function kill() {
+        
+        glitchEffect.kill();
+        
+        super.kill();
     }
 }

@@ -22,6 +22,7 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
+	public static var PLAYER:Player;
 
 	var _player:Player;
 	var camFollow:FlxObject;
@@ -52,6 +53,7 @@ class PlayState extends FlxState
 		add(walls);
 
 		_player = new Player(0, 0);
+		PLAYER = _player;
 		grpKeys = new FlxTypedGroup<Key>();
 		add(grpKeys);
 
@@ -152,11 +154,15 @@ class PlayState extends FlxState
 		FlxG.camera.focusOn(_player.getPosition());
 		FlxG.worldBounds.set(0, 0, walls.width, walls.height);
 
-		FlxG.sound.playMusic(AssetPaths.float__mp3);
+		FlxG.sound.playMusic(AssetPaths.environment__mp3);
 
 		fragsNeeded = new HoverText(0, 0, 0, "", 16);
 		fragsNeeded.color = FlxColor.BLACK;
 		add(fragsNeeded);
+
+		curDialogue = new CutsceneText(0, 0, 160, "", 12);
+		add(curDialogue);
+		curDialogue.visible = false;
 
 		super.create();
 		
@@ -224,8 +230,18 @@ class PlayState extends FlxState
 	{
 		super.update(elapsed);
 
+		if (FlxG.keys.justPressed.L)
+			FlxG.sound.playMusic(AssetPaths.musicLoop__mp3, 0.9);
+
 		if (!_player.inCutscene)
 			camFollow.setPosition(_player.x, _player.y);
+		else
+		{
+			if (FlxG.keys.justPressed.SPACE)
+			{
+				advanceText();
+			}
+		}
 
 		FlxG.collide(_player, walls);
 		FlxG.collide(_player, grpLocks, function(playa:Player, lock:Lock)
@@ -241,6 +257,7 @@ class PlayState extends FlxState
 
 		FlxG.overlap(_player, grpKeys, function(playa:Player, key:Key)
 		{
+			FlxG.sound.play(AssetPaths.pickup__mp3, 0.6);
 			key.collected = true;
 			key.kill();
 		});
@@ -288,6 +305,8 @@ class PlayState extends FlxState
 			add(message);
 			message.finishText();
 
+			FlxG.sound.play(AssetPaths.pickup__mp3);
+
 			frag.kill();
 		});
 
@@ -321,15 +340,57 @@ class PlayState extends FlxState
 
 			var actor:SceneActor = new SceneActor(prop.x + sceneMetaData[1][i][0], prop.y + sceneMetaData[1][i][1], sceneMetaData[2][i]);
 			add(actor);
+			grpActors.push(actor);
 
 			var glitchEffect:FlxEffectSprite;
 			add(glitchEffect = new FlxEffectSprite(actor, [new FlxGlitchEffect(FlxG.random.int(4, 7), 2, FlxG.random.float(0.05, 0.2))]));
 			glitchEffect.setPosition(actor.x, actor.y);
-
-			
+			actor.glitchEffect = glitchEffect;
 		}
 
 		camFollow.setPosition(camFollow.x + sceneMetaData[3][0], camFollow.y + sceneMetaData[3][1]);
 		FlxG.camera.zoom = sceneMetaData[3][2];
+
+		cutsceneProp = prop;
+
+		advanceText(sceneNum);
+	}
+
+	private var curLine:Int = 0;
+	private var grpActors:Array<SceneActor> = [];
+	private var curDialogue:CutsceneText;
+	private var cutsceneProp:CutsceneProp;
+	private function advanceText(sceneNum:Int = 0):Void
+	{
+		if (Cutscenes.cutscenes[sceneNum][1][curLine] != null)
+		{
+			var curActor:SceneActor = grpActors[Cutscenes.cutscenes[sceneNum][1][curLine][0]];
+			camFollow.setPosition(curActor.x, curActor.y);
+			curDialogue.setPosition(curActor.x - 50, curActor.y - 30);
+			curDialogue.endText = Cutscenes.cutscenes[sceneNum][1][curLine][1];
+			curDialogue.visible = true;
+
+			curLine += 1;
+		}
+		else
+		{
+			
+			endCutscene();
+		}
+	}
+
+	private function endCutscene():Void
+	{
+		FlxG.camera.zoom = 1;
+		FlxG.camera.flash(FlxColor.WHITE, 0.2);
+		curLine = 0;
+		curDialogue.visible = false;
+		for (actor in grpActors) {
+			actor.kill();
+		}
+
+		cutsceneProp.kill();
+
+		_player.inCutscene = false;
 	}
 }

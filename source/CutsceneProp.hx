@@ -19,4 +19,10 @@ class CutsceneProp extends FlxSprite
 
         grpFrags = new FlxTypedGroup<Fragment>();
     }
+
+    override function kill() {
+        glitchEffect.kill();
+
+        super.kill();
+    }
 }
