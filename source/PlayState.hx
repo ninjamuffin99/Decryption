@@ -72,6 +72,16 @@ class PlayState extends FlxState
 
 		map.loadEntities(placeEntities, 'entities');
 
+		grpKeys.forEach(function(k:Key)
+		{
+			grpLocks.forEach(function(lock:Lock){
+				if (lock.unlockedBy == k.canUnlock)
+				{
+					k.daDoor = lock;
+				}
+			});
+		});
+
 
 		grpFragments.forEach(function(frag:Fragment)
 		{
@@ -239,7 +249,7 @@ class PlayState extends FlxState
 		{
 			if (FlxG.keys.justPressed.SPACE)
 			{
-				advanceText();
+				advanceText(cutsceneProp.cutsceneNum);
 			}
 		}
 
@@ -328,7 +338,7 @@ class PlayState extends FlxState
 		// _player.visible = false;
 		FlxG.camera.flash(FlxColor.WHITE, 0.2);
 
-		loadCutscene(0, prop);
+		loadCutscene(prop.cutsceneNum, prop);
 	}
 
 	public function loadCutscene(sceneNum:Int = 0, prop:CutsceneProp):Void
@@ -360,7 +370,7 @@ class PlayState extends FlxState
 	private var grpActors:Array<SceneActor> = [];
 	private var curDialogue:CutsceneText;
 	private var cutsceneProp:CutsceneProp;
-	private function advanceText(sceneNum:Int = 0):Void
+	private function advanceText(sceneNum:Int):Void
 	{
 		if (Cutscenes.cutscenes[sceneNum][1][curLine] != null)
 		{
@@ -374,7 +384,6 @@ class PlayState extends FlxState
 		}
 		else
 		{
-			
 			endCutscene();
 		}
 	}
@@ -388,6 +397,8 @@ class PlayState extends FlxState
 		for (actor in grpActors) {
 			actor.kill();
 		}
+
+		grpActors = [];
 
 		cutsceneProp.kill();
 

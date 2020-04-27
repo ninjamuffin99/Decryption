@@ -36,7 +36,7 @@ class Lock extends FlxSprite
 
         sndDecrypt = new FlxSound();
         sndDecrypt.loadEmbedded(AssetPaths.encLoop__mp3, false);
-        sndDecrypt.volume = 0.6;
+        sndDecrypt.volume = 0.5;
         FlxG.sound.list.add(sndDecrypt);
 
     }
