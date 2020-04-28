@@ -1,5 +1,6 @@
 package;
 
+import io.newgrounds.NG;
 import flixel.util.FlxColor;
 import flixel.FlxG;
 import flixel.FlxState;
@@ -24,16 +25,21 @@ class FakeLoadingScreen extends FlxState
 		
 		FlxG.sound.play("assets/sounds/pcAmbience.mp3");
 
-        FlxG.sound.music.fadeOut(12, 0);
+		FlxG.sound.music.fadeOut(12, 0);
+		FlxG.mouse.visible = false;
+
+
+		var name:String = 'guest-' + FlxG.random.int(0, 10000);
+
+		if (NGio.isLoggedIn)
+		{
+			name = NG.core.user.name;
+		}
         
 		
-		printing = new FlxText(2, 2, 0, "Loading... Server-USA-WEST" + FlxG.random.int(0, 200) + "\nLogged in as user guest-" + FlxG.random.int(0, 10000), 8);
+		printing = new FlxText(2, 2, 0, "Loading... Server-USA-WEST" + FlxG.random.int(0, 200) + "\nLogged in as user " + name, 8);
         printing.color = FlxColor.BLACK;
 		add(printing);
-		
-		#if (!debug)
-		    var ng:NGio = new NGio(API.apiID, API.encKey);
-		#end
 		
 		super.create();
 	}

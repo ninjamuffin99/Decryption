@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.addons.effects.chainable.FlxGlitchEffect;
 import flixel.addons.effects.chainable.FlxEffectSprite;
@@ -25,6 +26,7 @@ class PlayState extends FlxState
 	public static var PLAYER:Player;
 
 	var _player:Player;
+	var playerGlitchEffect:FlxEffectSprite;
 	var camFollow:FlxObject;
 	var _trail:FlxTrail;
 	private var snowShit:FlxEmitter;
@@ -44,7 +46,7 @@ class PlayState extends FlxState
 	override public function create():Void
 	{
 		FlxG.camera.fade(FlxColor.WHITE, 2, true);
-		
+		FlxG.mouse.visible = false;
 		bgColor = FlxColor.WHITE;
 
 		map = new FlxOgmo3Loader(AssetPaths.daMap__ogmo, AssetPaths.daLevel__json);
@@ -239,6 +241,7 @@ class PlayState extends FlxState
 
 			case "player":
 				_player.setPosition(entity.x, entity.y);
+				add(playerGlitchEffect = new FlxEffectSprite(_player, [new FlxGlitchEffect(2, 1, 0.02)]));
 		}
 	}
 
@@ -279,6 +282,15 @@ class PlayState extends FlxState
 			key.collected = true;
 			key.kill();
 		});
+
+		var glitchCounter:Int = 0;
+		grpProps.forEachDead(function(prop:CutsceneProp)
+		{
+			glitchCounter += 1;
+		});
+
+		playerGlitchEffect.alpha = FlxMath.remapToRange(glitchCounter, 0, 7, 0, 1);
+		playerGlitchEffect.setPosition(_player.x, _player.y);
 
 		var overlappingProp:Bool = false;
 

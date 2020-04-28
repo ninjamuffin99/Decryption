@@ -621,8 +621,8 @@
           "name": "cutsceneprop",
           "id": 67,
           "_eid": "79075962",
-          "x": 1288,
-          "y": 816,
+          "x": 1272,
+          "y": 832,
           "originX": 0,
           "originY": 0,
           "values": {"scenenum": 3, "icon": "record"}
@@ -993,6 +993,16 @@
           "originX": 0,
           "originY": 0,
           "values": {"scenenum": 6, "icon": "inkfeather"}
+        },
+        {
+          "name": "cutsceneprop",
+          "id": 105,
+          "_eid": "79075962",
+          "x": 704,
+          "y": 832,
+          "originX": 0,
+          "originY": 0,
+          "values": {"scenenum": 9, "icon": "starr"}
         }
       ]
     },

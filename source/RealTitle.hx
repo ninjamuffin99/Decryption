@@ -10,6 +10,7 @@ class RealTitle extends FlxState
 {
     override function create() {
         bgColor = FlxColor.WHITE;
+        FlxG.mouse.visible = false;
 
         FlxG.camera.fade(FlxColor.WHITE, 1, true);
 
