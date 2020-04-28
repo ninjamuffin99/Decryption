@@ -214,7 +214,7 @@
           "name": "cutsceneprop",
           "id": 26,
           "_eid": "79075962",
-          "x": 1392,
+          "x": 1400,
           "y": 1632,
           "originX": 0,
           "originY": 0,
@@ -619,19 +619,9 @@
         },
         {
           "name": "cutsceneprop",
-          "id": 66,
-          "_eid": "79075962",
-          "x": 1672,
-          "y": 1152,
-          "originX": 0,
-          "originY": 0,
-          "values": {"scenenum": 2, "icon": "sword"}
-        },
-        {
-          "name": "cutsceneprop",
           "id": 67,
           "_eid": "79075962",
-          "x": 1296,
+          "x": 1288,
           "y": 816,
           "originX": 0,
           "originY": 0,
@@ -961,7 +951,7 @@
           "y": 560,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 10, "icon": "sword"}
+          "values": {"scenenum": 10, "icon": "horn"}
         },
         {
           "name": "secretmessage",
@@ -983,6 +973,26 @@
           "originX": 0,
           "originY": 0,
           "values": {"scenenumber": 10, "fragmessage": "dont pull that shit again", "fragid": ""}
+        },
+        {
+          "name": "cutsceneprop",
+          "id": 102,
+          "_eid": "79075962",
+          "x": 1720,
+          "y": 1168,
+          "originX": 0,
+          "originY": 0,
+          "values": {"scenenum": 4, "icon": "candle"}
+        },
+        {
+          "name": "cutsceneprop",
+          "id": 103,
+          "_eid": "79075962",
+          "x": 672,
+          "y": 1512,
+          "originX": 0,
+          "originY": 0,
+          "values": {"scenenum": 6, "icon": "inkfeather"}
         }
       ]
     },
