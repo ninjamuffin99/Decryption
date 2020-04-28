@@ -206,6 +206,7 @@ class PlayState extends FlxState
 			case "cutsceneprop":
 				var prop:CutsceneProp = new CutsceneProp(entity.x, entity.y);
 				prop.cutsceneNum = entity.values.scenenum;
+				prop.loadGraphic('assets/images/' + entity.values.icon + ".png");
 				grpProps.add(prop);
 
 				var glitchEffect:FlxEffectSprite;

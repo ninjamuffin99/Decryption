@@ -81,7 +81,7 @@ class Cutscenes
                 [1, 'hard for me to articulate or whatever']
             ]
         ],
-        [///6
+        [///6, used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -93,7 +93,7 @@ class Cutscenes
                 [0, 'i hope there doing alright']
             ]
         ],
-        [
+        [///used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -105,7 +105,7 @@ class Cutscenes
                 [0, "but do you want to be boyfriend and girlfriend?"]
             ]
         ],
-        [
+        [//used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
