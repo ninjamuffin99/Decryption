@@ -27,6 +27,12 @@ class Player extends FlxSprite
         maxVelocity.set(60, 60);
         drag.set(17, 17);
 
+        offset.x = 10;
+        width -= offset.x * 2;
+
+        offset.y = 3;
+        height -= offset.y * 2;
+
         floatinSound = new FlxSound();
         floatinSound.loadEmbedded(AssetPaths.movingLoop__mp3, true, false);
         floatinSound.volume = 0.4;
@@ -47,6 +53,14 @@ class Player extends FlxSprite
         var down:Bool = FlxG.keys.anyPressed(['S', "DOWN"]);
         var left:Bool = FlxG.keys.anyPressed(['A', "LEFT"]);
         var right:Bool = FlxG.keys.anyPressed(['D', "RIGHT"]);
+
+        if (FlxG.keys.pressed.SHIFT)
+        {
+            maxVelocity.set(100, 100);
+        }
+        else
+            maxVelocity.set(60, 60);
+
 
         if (up && down)
             up = down = false;

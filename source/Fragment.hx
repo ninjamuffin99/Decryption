@@ -27,6 +27,8 @@ class Fragment extends FlxSprite
         super.update(elapsed);
 
         glitchSprite.visible = isOnScreen();
+        glitchSprite.active = glitchSprite.visible;
+        visible = isOnScreen();
     }
 
     override function kill() {

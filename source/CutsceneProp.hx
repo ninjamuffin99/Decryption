@@ -18,6 +18,13 @@ class CutsceneProp extends FlxSprite
         grpFrags = new FlxTypedGroup<Fragment>();
     }
 
+    override function update(elapsed:Float) {
+        glitchEffect.visible = isOnScreen();
+        visible = isOnScreen();
+        
+        super.update(elapsed);
+    }
+
     override function kill() {
         glitchEffect.kill();
 

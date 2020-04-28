@@ -36,9 +36,18 @@ class Lock extends FlxSprite
 
         sndDecrypt = new FlxSound();
         sndDecrypt.loadEmbedded(AssetPaths.encLoop__mp3, false);
-        sndDecrypt.volume = 0.5;
+        sndDecrypt.volume = 0.8;
         FlxG.sound.list.add(sndDecrypt);
 
+    }
+
+    override function update(elapsed:Float) {
+        visible = isOnScreen();
+        daTexts.visible = visible;
+        daTexts.active = visible;
+        sndDecrypt.active = visible;
+
+        super.update(elapsed);
     }
 
     public function decryptLock():Void
@@ -55,7 +64,7 @@ class Lock extends FlxSprite
             FlxTween.tween(loader.scale, {x: 1}, 3);
             FlxTween.tween(daTexts, {encSpeed: 1}, 3, {ease: FlxEase.quadOut, onComplete: function(twen:FlxTween)
                 {
-                    FlxG.sound.play(AssetPaths.finish__mp3, 0.6);
+                    FlxG.sound.play(AssetPaths.finish__mp3, 0.3);
                     daTexts.finishText(); 
                     kill();
                     loader.kill();

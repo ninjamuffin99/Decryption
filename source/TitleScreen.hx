@@ -12,6 +12,7 @@ class TitleScreen extends FlxState
         add(title);
 
         FlxG.sound.playMusic(AssetPaths.title__mp3, 0.7);
+        FlxG.mouse.visible = false;
         
         super.create();
     }

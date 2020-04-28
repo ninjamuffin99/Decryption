@@ -320,7 +320,7 @@
           "name": "cutsceneprop",
           "id": 36,
           "_eid": "79075962",
-          "x": 1032,
+          "x": 1040,
           "y": 2144,
           "originX": 0,
           "originY": 0,
@@ -718,7 +718,7 @@
           "y": 2096,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 7, "icon": "femsymb3"}
+          "values": {"scenenum": 7, "icon": "heart"}
         },
         {
           "name": "secretmessage",

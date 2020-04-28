@@ -165,7 +165,7 @@ class PlayState extends FlxState
 		FlxG.worldBounds.set(0, 0, walls.width, walls.height);
 
 		FlxG.sound.playMusic(AssetPaths.musicLoop__mp3);
-		FlxG.sound.music.fadeIn(3, 0, 0.7);
+		FlxG.sound.music.fadeIn(7, 0, 0.9);
 
 		fragsNeeded = new HoverText(0, 0, 0, "", 16);
 		fragsNeeded.color = FlxColor.BLACK;
@@ -217,6 +217,12 @@ class PlayState extends FlxState
 				var key:Key = new Key(entity.x, entity.y);
 				key.canUnlock = entity.values.locknum;
 				grpKeys.add(key);
+
+				var glitch:FlxEffectSprite;
+				add(glitch = new FlxEffectSprite(key, [new FlxGlitchEffect(5, 2, 0.01)]));
+				glitch.setPosition(entity.x, entity.y);
+				key.glitchEffect = glitch;
+
 			case 'locked':
 				var lock:Lock = new Lock(entity.x, entity.y, entity.width, entity.height);
 				lock.unlockedBy = entity.values.locknum;

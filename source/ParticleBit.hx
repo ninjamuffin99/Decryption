@@ -20,6 +20,8 @@ class ParticleBit extends FlxParticle
     private var bitswapCounter:Int = 0;
 
     override function update(elapsed:Float) {
+        visible = isOnScreen();
+        
         super.update(elapsed);
 
     }
