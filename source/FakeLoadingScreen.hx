@@ -29,7 +29,11 @@ class FakeLoadingScreen extends FlxState
 		
 		printing = new FlxText(2, 2, 0, "Loading... Server-USA-WEST" + FlxG.random.int(0, 200) + "\nLogged in as user guest-" + FlxG.random.int(0, 10000), 8);
         printing.color = FlxColor.BLACK;
-        add(printing);
+		add(printing);
+		
+		#if (!debug)
+		    var ng:NGio = new NGio(API.apiID, API.encKey);
+		#end
 		
 		super.create();
 	}

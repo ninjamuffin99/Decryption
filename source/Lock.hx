@@ -1,5 +1,6 @@
 package;
 
+import io.newgrounds.NG;
 import flixel.system.FlxSound;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
@@ -54,6 +55,9 @@ class Lock extends FlxSprite
     {
         if (!deCrypting)
         {
+
+
+
             deCrypting = true;
 
 
@@ -64,6 +68,14 @@ class Lock extends FlxSprite
             FlxTween.tween(loader.scale, {x: 1}, 3);
             FlxTween.tween(daTexts, {encSpeed: 1}, 3, {ease: FlxEase.quadOut, onComplete: function(twen:FlxTween)
                 {
+
+                    if (NGio.isLoggedIn)
+                    {
+                        var hornyMedal = NG.core.medals.get(59381);
+                        if (!hornyMedal.unlocked)
+                            hornyMedal.sendUnlock();
+                    }
+
                     FlxG.sound.play(AssetPaths.finish__mp3, 0.3);
                     daTexts.finishText(); 
                     kill();
