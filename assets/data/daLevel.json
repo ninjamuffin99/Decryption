@@ -218,7 +218,7 @@
           "y": 1632,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 2, "icon": "sword"}
+          "values": {"scenenum": 2, "icon": "snake"}
         },
         {
           "name": "fragment",
@@ -324,7 +324,7 @@
           "y": 2144,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 1, "icon": "sword"}
+          "values": {"scenenum": 1, "icon": "ule"}
         },
         {
           "name": "fragment",
@@ -551,7 +551,7 @@
           "y": 1672,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 5, "icon": "sword"}
+          "values": {"scenenum": 5, "icon": "campfire"}
         },
         {
           "name": "fragment",
@@ -635,7 +635,7 @@
           "y": 816,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 3, "icon": "sword"}
+          "values": {"scenenum": 3, "icon": "record"}
         },
         {
           "name": "key",
@@ -792,7 +792,7 @@
           "y": 2160,
           "originX": 0,
           "originY": 0,
-          "values": {"scenenum": 8, "icon": "sword"}
+          "values": {"scenenum": 8, "icon": "dunnolol"}
         },
         {
           "name": "fragment",
