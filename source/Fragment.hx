@@ -23,6 +23,12 @@ class Fragment extends FlxSprite
         grpMessages = new FlxTypedGroup<HiddenMessage>();
     }
 
+    override function update(elapsed:Float) {
+        super.update(elapsed);
+
+        glitchSprite.visible = isOnScreen();
+    }
+
     override function kill() {
         glitchSprite.kill();
 

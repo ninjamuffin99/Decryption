@@ -16,7 +16,10 @@ class Player extends FlxSprite
 
         // makeGraphic(32, 64, FlxColor.BLACK);
 
-        loadGraphic(AssetPaths.player__png);
+        loadGraphic(AssetPaths.player__png, true, 32, 35);
+        animation.add('hoverdown', [2, 2, 2, 2, 2, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0], 1);
+        animation.add('hoverup', [4, 3, 5, 3], 1);
+        animation.play('hoverdown');
 
         setFacingFlip(FlxObject.LEFT, false, false);
         setFacingFlip(FlxObject.RIGHT, true, false);

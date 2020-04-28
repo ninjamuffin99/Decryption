@@ -5,7 +5,7 @@ class Cutscenes
     // 
     public static var cutscenes:Array<Dynamic> =
     [
-        [
+        [//used
             [
                 // Scene metadata. [amount of characters][character positions], images to use, camera metadata [x offset, y offset, zoom]
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
@@ -20,7 +20,7 @@ class Cutscenes
                 [0, 'no problem']
             ]
         ],
-        [
+        [//used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -31,7 +31,7 @@ class Cutscenes
             ]
 
         ],
-        [
+        [//used
             [
                 3, [[40, -10], [200, 10], [100, -60]], ['placeholder', 'placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -47,7 +47,7 @@ class Cutscenes
             ]
 
         ],
-        [
+        [///used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -60,17 +60,17 @@ class Cutscenes
                 [0, 'lol']
             ]
         ],
-        [
+        [///used
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
             [
                 [1, 'idk man'],
                 [1, "its just been weird"],
-                [1, 'and i always have a hardt time explaning']
+                [1, 'i always have a hardt time explaning']
             ]
         ],
-        [
+        [///used
             [
                 2, [[40, -10], [200, 10], [50, -100], [60, 100]], ['placeholder', 'placeholder', 'placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -81,7 +81,7 @@ class Cutscenes
                 [1, 'hard for me to articulate or whatever']
             ]
         ],
-        [
+        [///6
             [
                 2, [[40, -10], [200, 10]], ['placeholder', 'placeholder'], [100, 5, 1.4]
             ],
@@ -114,8 +114,7 @@ class Cutscenes
                 [0, 'ive never been open about myself'],
                 [0, 'not like this before'],
                 [1, 'yeah'],
-                [1, 'me either'],
-                [1, 'vulnerable']
+                [1, 'me either']
             ]
         ],
         [
@@ -133,7 +132,7 @@ class Cutscenes
         ],
         [
             [
-                3, [[40, -10], [200, 10], [100, 70]], ['placeholder', 'placeholder'], [100, 5, 1.4]
+                3, [[40, -10], [200, 10], [100, 70]], ['placeholder', 'placeholder', 'placeholder'], [100, 5, 1.4]
             ],
             [
                 [2, "yo uh"],

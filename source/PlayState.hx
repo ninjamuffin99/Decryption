@@ -48,7 +48,7 @@ class PlayState extends FlxState
 		bgColor = FlxColor.WHITE;
 
 		map = new FlxOgmo3Loader(AssetPaths.daMap__ogmo, AssetPaths.daLevel__json);
-		walls = map.loadTilemap(AssetPaths.tileset__png, "tiles");
+		walls = map.loadTilemap(AssetPaths.betterTileslol__png, "tiles");
 		walls.follow();
 		add(walls);
 
@@ -164,7 +164,8 @@ class PlayState extends FlxState
 		FlxG.camera.focusOn(_player.getPosition());
 		FlxG.worldBounds.set(0, 0, walls.width, walls.height);
 
-		FlxG.sound.playMusic(AssetPaths.environment__mp3);
+		FlxG.sound.playMusic(AssetPaths.musicLoop__mp3);
+		FlxG.sound.music.fadeIn(3, 0, 0.7);
 
 		fragsNeeded = new HoverText(0, 0, 0, "", 16);
 		fragsNeeded.color = FlxColor.BLACK;
