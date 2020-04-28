@@ -246,18 +246,19 @@ class PlayState extends FlxState
 	}
 
 	var activeTimer:Int = 0;
+	var transitioning:Bool = false;
 
 	override public function update(elapsed:Float):Void
 	{
 		super.update(elapsed);
 
-		if (FlxG.keys.justPressed.L)
-			FlxG.sound.playMusic(AssetPaths.musicLoop__mp3, 0.9);
-
 		if (!_player.inCutscene)
 			camFollow.setPosition(_player.x, _player.y);
 		else
 		{
+
+			_player.velocity.set();
+
 			if (FlxG.keys.justPressed.SPACE)
 			{
 				advanceText(cutsceneProp.cutsceneNum);
@@ -289,7 +290,19 @@ class PlayState extends FlxState
 			glitchCounter += 1;
 		});
 
-		playerGlitchEffect.alpha = FlxMath.remapToRange(glitchCounter, 0, 7, 0, 1);
+		FlxG.watch.addQuick('bullsht', glitchCounter);
+
+		if (glitchCounter >= 10 && !transitioning)
+		{
+			FlxG.log.add("ayy");
+			FlxG.camera.fade(FlxColor.WHITE, 4, false, function()
+			{
+				FlxG.switchState(new RealTitle(true));
+			});
+			transitioning = true;
+		}
+
+		playerGlitchEffect.alpha = FlxMath.remapToRange(glitchCounter, 0, 12, 0, 1);
 		playerGlitchEffect.setPosition(_player.x, _player.y);
 
 		var overlappingProp:Bool = false;

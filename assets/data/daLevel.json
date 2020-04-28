@@ -267,7 +267,7 @@
           "id": 31,
           "_eid": "83242277",
           "x": 1448,
-          "y": 1960,
+          "y": 1952,
           "originX": 0,
           "originY": 0,
           "values": {"scenenumber": 2, "fragmessage": "what do we do about it?", "fragid": "todo"}
@@ -1003,6 +1003,17 @@
           "originX": 0,
           "originY": 0,
           "values": {"scenenum": 9, "icon": "starr"}
+        },
+        {
+          "name": "secretmessage",
+          "id": 106,
+          "_eid": "87738438",
+          "x": 1416,
+          "y": 1568,
+          "width": 100,
+          "originX": 0,
+          "originY": 0,
+          "values": {"fragid": "understand1", "message": "understandable"}
         }
       ]
     },

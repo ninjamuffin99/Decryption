@@ -8,6 +8,13 @@ import flixel.FlxState;
 
 class RealTitle extends FlxState
 {
+
+    private var end:Bool = false;
+    public function new(end:Bool = false) {
+        super();    
+
+        this.end = end;
+    }
     override function create() {
         bgColor = FlxColor.WHITE;
         FlxG.mouse.visible = false;
@@ -34,10 +41,14 @@ class RealTitle extends FlxState
             creds.hoverActive = true;
         });
 
-        new FlxTimer().start(5, function(tmr:FlxTimer)
+        if (!end)
         {
-            FlxG.camera.fade(FlxColor.WHITE, 5, false, function(){FlxG.switchState(new PlayState());});
-        });
+            new FlxTimer().start(5, function(tmr:FlxTimer)
+            {
+                FlxG.camera.fade(FlxColor.WHITE, 5, false, function(){FlxG.switchState(new PlayState());});
+            });
+        }
+        
 
 
         
