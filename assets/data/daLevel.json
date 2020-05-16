@@ -24,8 +24,7 @@
           "y": 1568,
           "width": 256,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 0, "locktext": "lolololol"}
         },
         {
@@ -56,8 +55,7 @@
           "y": 1568,
           "width": 224,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 2, "locktext": "real shit"}
         },
         {
@@ -78,8 +76,7 @@
           "y": 1760,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 3, "locktext": "just people acting weird i guess"}
         },
         {
@@ -130,8 +127,7 @@
           "y": 2144,
           "width": 160,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 100, "locktext": "lmaooo"}
         },
         {
@@ -196,8 +192,7 @@
           "y": 1344,
           "width": 256,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 111, "locktext": "ive never really had friends before"}
         },
         {
@@ -365,8 +360,7 @@
           "y": 896,
           "width": 160,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 345, "locktext": "i never know the right words to say"}
         },
         {
@@ -377,8 +371,7 @@
           "y": 896,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 222, "locktext": "i have a hard time expressing myself"}
         },
         {
@@ -389,8 +382,7 @@
           "y": 640,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 333, "locktext": "i worry about losing my friends"}
         },
         {
@@ -494,8 +486,7 @@
           "y": 1760,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 999, "locktext": "hard to understand what others want from me"}
         },
         {
@@ -506,8 +497,7 @@
           "y": 1984,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 992, "locktext": "hard to understand how im feeling"}
         },
         {
@@ -518,8 +508,7 @@
           "y": 2112,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 989, "locktext": "do you understand?"}
         },
         {
@@ -602,8 +591,7 @@
           "y": 608,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 2121, "locktext": "i worry about everything"}
         },
         {
@@ -706,8 +694,7 @@
           "y": 2176,
           "width": 192,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 420420, "locktext": "really its all just me overthinking things"}
         },
         {
@@ -760,8 +747,7 @@
           "y": 2592,
           "width": 160,
           "height": 32,
-          "originX": 0,
-          "originY": 0,
+          "rotation": 0,
           "values": {"locknum": 8008, "locktext": "i think im going to ask it"}
         },
         {

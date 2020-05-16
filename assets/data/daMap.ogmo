@@ -78,7 +78,7 @@
       "limit": -1,
       "size": {"x": 16, "y": 16},
       "origin": {"x": 0, "y": 0},
-      "originAnchored": true,
+      "originAnchored": false,
       "shape": {
         "label": "Rectangle",
         "points": [
@@ -96,7 +96,7 @@
       "tileSize": {"x": 16, "y": 16},
       "resizeableX": true,
       "resizeableY": true,
-      "rotatable": false,
+      "rotatable": true,
       "rotationDegrees": 360,
       "canFlipX": false,
       "canFlipY": false,

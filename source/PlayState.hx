@@ -1,5 +1,6 @@
 package;
 
+import io.newgrounds.NG;
 import flixel.math.FlxMath;
 import flixel.util.FlxTimer;
 import flixel.addons.effects.chainable.FlxGlitchEffect;
@@ -292,8 +293,16 @@ class PlayState extends FlxState
 
 		FlxG.watch.addQuick('bullsht', glitchCounter);
 
-		if (glitchCounter >= 10 && !transitioning)
+		if (glitchCounter >= 11 && !transitioning)
 		{
+
+			if (NGio.isLoggedIn)
+			{
+				var hornyMedal = NG.core.medals.get(59387);
+				if (!hornyMedal.unlocked)
+					hornyMedal.sendUnlock();
+			}
+
 			FlxG.log.add("ayy");
 			FlxG.camera.fade(FlxColor.WHITE, 4, false, function()
 			{
@@ -324,6 +333,12 @@ class PlayState extends FlxState
 
 		FlxG.overlap(_player, grpFragments, function(playa:Player, frag:Fragment)
 		{
+
+			if (NGio.isLoggedIn)
+			{
+				NG.core.log('lol');
+			}
+
 			FlxG.camera.flash(FlxColor.WHITE, 0.2);
 
 			frag.grpMessages.forEach(function(message:HiddenMessage)
